@@ -54,7 +54,8 @@ export default function MealEntry() {
         console.log(res)
         switch(res.status.description) {
             case '':
-                employees.get(_employeeID).then(res => setName(res.payload.name))
+                employees.get(_employeeID)
+                  .then(res => setName(res.payload.name))
                 setErrorMessage('Enjoy Your Meal! ' + _name)
                 setErrorLevel("success")
                 break;
@@ -70,7 +71,12 @@ export default function MealEntry() {
       "employee_id": _employeeID
     }
     console.log(data)
-    meal_entries.post(data).then(res => onResponse(res))
+    meal_entries.post(data)
+    .then(res => onResponse(res))
+    .catch(err => { 
+      setErrorMessage("Something Went Wrong! Server isnt responsive, Contact administrator")
+      setErrorLevel("danger")
+    })
     setEmployeeID('')
   }
 
@@ -84,22 +90,38 @@ export default function MealEntry() {
   }
 
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+      
+      <GridItem xs={12} sm={12} md={3}>
+          {/* <Card>
+            <CardBody>
+            </CardBody>
+            <CardFooter>
+            </CardFooter>
+          </Card> */}
+      </GridItem>
+
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Get A Meal</h4>
               <p className={classes.cardCategoryWhite}>Get Your Meal</p>
             </CardHeader>
             <CardBody>
+                
+
               <GridContainer>
+              <GridItem xs={12} sm={12} md={3}>
+                </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                 <TextField id="employee-id" label="Employee ID" 
                     value={_employeeID}
                     onChange={onChange}
                     fullWidth
                   />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={3}>
                 </GridItem>
               </GridContainer>
 
@@ -110,19 +132,37 @@ export default function MealEntry() {
               </GridContainer>
 
               <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
+              <GridItem xs={12} sm={12} md={2}>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={8}>
               <SnackbarContent
                 message={_errorMessage}
                 color={_errorLevel}
             />
             </GridItem>
+            <GridItem xs={12} sm={12} md={2}>
+                </GridItem>
             </GridContainer>
+
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={2}>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={8}>
+                <Button color="primary" onClick={submitForm}>Confirm</Button>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={2}>
+              </GridItem>
+              </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary" onClick={submitForm}>Submit</Button>
+              
             </CardFooter>
           </Card>
         </GridItem>
+
+        <GridItem xs={12} sm={12} md={3}>
+          
+      </GridItem>
       </GridContainer>
     </div>
   );
