@@ -1,4 +1,4 @@
-# sling-cafe-admin
+# sling-cafe-user
 
 * based on the material-ui template https://www.creative-tim.com/product/material-dashboard
 * uses reactjs, redux and material ui
